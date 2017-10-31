@@ -6,6 +6,8 @@
 
 ## Общие принципы
 
+Перед началом работы рекомендуется прочитать [clean code javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+
 **Именование файлов**
 
 Все директории, .js и .less файлы называются в стиле camelCase, все компоненты называются
@@ -19,6 +21,25 @@
 
 Функции общего назначения должны быть вынесены в отдельные js файлы с соответствующим
 названием.
+
+Исключением является вызов $emit, если событие не требует дополнительных параметров:
+
+```js
+export default {
+  methods: {
+    handleBlur() {
+      this.emitBlur();
+    },
+    handleOtherEvent() {
+      this.emitBlur();
+    },
+    // это
+    emitBlur() {
+      this.$emit('blur');
+    }
+  }
+}
+```
 
 
 ## Code Style
