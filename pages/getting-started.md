@@ -21,7 +21,7 @@ vue init webpack-simple platrum-components
 
 В переданном ТЗ должно быть указано название группы компонентов и пример использования.
 
-> Группа: `Select`
+> Группа: `select`
 > 
 > Компоненты: `ui-select`, `ui-select-option`
 >
@@ -49,12 +49,12 @@ vue init webpack-simple platrum-components
 ```
 platrum-components
   src
-    Select
+    select
       Select.vue
       Option.vue
 ```
 
-В этом случае весь требуемый для работы компонента код должен располагаться внутри директории `src/Select`.
+В этом случае весь требуемый для работы компонента код должен располагаться внутри директории `src/select`.
 
 Очистите содержимое `src/App.vue` и вставьте туда код по следующему шаблону:
 
