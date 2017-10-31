@@ -15,7 +15,13 @@ npm install -g vue-cli
 vue init webpack-simple platrum-components
 ```
 
-Далее следуйте инструкциям утилиты, чтобы открыть проект в браузере.
+Далее следуйте инструкциям утилиты, чтобы открыть проект в браузере:
+
+```
+cd platrum-components
+npm install
+npm run dev
+```
 
 ## Добавление компонента из ТЗ
 
@@ -67,8 +73,8 @@ platrum-components
   export default {
     components: {
       // каждый компонент, требуемый в примере использования, например:
-      // 'ui-select': require('./Select/Select.vue').default,
-      // 'ui-select-option': require('./Select/Option.vue').default,
+      // 'ui-select': require('./select/Select.vue').default,
+      // 'ui-select-option': require('./select/Option.vue').default,
     }
   };
 </script>
