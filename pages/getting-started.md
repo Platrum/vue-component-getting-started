@@ -82,3 +82,36 @@ platrum-components
 
 Если вы все сделали правильно, по ссылке `http://localhost:8080` не должно быть ошибок, только пустая страница.
 Теперь можно добавлять контент в компоненты, изменения должны появляться в браузере в реальном времени.
+
+## Пример: Button
+
+> Группа: `button`
+> 
+> Компоненты: `ui-button`
+>
+> Пример:
+> ```vue
+> <ui-button>Click me</ui-button>
+> ```
+
+`src/App.vue`:
+```
+<template>
+  <ui-button>Click me</ui-button>
+</template>
+
+<script>
+  export default {
+    components: {
+      'ui-button': require('./button/Button.vue').default
+    }
+  };
+</script>
+```
+
+`src/button/Button.vue`:
+```
+<template>
+  <button><slot></slot></button>
+</template>
+```
