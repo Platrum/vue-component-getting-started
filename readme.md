@@ -1,5 +1,5 @@
 # Правила разработки компонентов
 
-[Code Conventions](/platrum/vue-component-docs/code-conventions.md)
+[Code Conventions](pages/code-conventions.md)
 
-[Getting Started](/platrum/vue-component/docs/getting-started.md)
+[Getting Started](pages/getting-started.md)
