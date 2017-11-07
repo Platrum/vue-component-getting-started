@@ -12,106 +12,24 @@ npm install -g vue-cli
 
 После этого можно инициализировать проект:
 ```
-vue init webpack-simple platrum-components
+vue init platrum/vue-component-template platrum-components
 ```
 
-Далее следуйте инструкциям утилиты, чтобы открыть проект в браузере:
+Перейдите в директорию и установите зависимости:
 
 ```
 cd platrum-components
 npm install
+```
+
+Сгенерируйте шаблон компонентов, требуемых в ТЗ:
+
+```
+node generate.js path/to/file.json
+```
+
+Запустите веб-сервер для разработки:
+
+```
 npm run dev
-```
-
-## Добавление компонента из ТЗ
-
-В переданном ТЗ должно быть указано название группы компонентов и пример использования.
-
-> Группа: `select`
-> 
-> Компоненты: `ui-select`, `ui-select-option`
->
-> Пример:
-> ```vue
-> <ui-select>
->   <ui-select-option>Option 1</ui-select-option>
->   <ui-select-option>Option 2</ui-select-option>
->   <ui-select-option>
->       <ui-title>Option 3</ui-title>
->   </ui-select-option>
-> </ui-select>
-> ```
-
-В этом примере компонент ui-title не требует разработки, так как не был отмечен в ТЗ. Если он
-был передан вам, его необходимо использовать, если нет — его надо заменить на стандартный браузерный 
-компонент (например, для `<ui-button>` это `<button>`, для `<ui-title>` это `<h1>`).
-
-Создайте директорию, соответствующую названию группы, в директории `src` тестового проекта. Создайте внутри
-этой директории компоненты с пустым содержимым.
-
-В приведенном выше примере правильная структура каталога, который будет передан заказчику в результате
-работы должна быть следующая:
-
-```
-platrum-components
-  src
-    select
-      Select.vue
-      Option.vue
-```
-
-В этом случае весь требуемый для работы компонента код должен располагаться внутри директории `src/select`.
-
-Очистите содержимое `src/App.vue` и вставьте туда код по следующему шаблону:
-
-```vue
-<template>
-  <!-- пример использования из ТЗ -->
-</template>
-
-<script>
-  export default {
-    components: {
-      // каждый компонент, требуемый в примере использования, например:
-      // 'ui-select': require('./select/Select.vue').default,
-      // 'ui-select-option': require('./select/Option.vue').default,
-    }
-  };
-</script>
-```
-
-Если вы все сделали правильно, по ссылке `http://localhost:8080` не должно быть ошибок, только пустая страница.
-Теперь можно добавлять контент в компоненты, изменения должны появляться в браузере в реальном времени.
-
-## Пример: Button
-
-> Группа: `button`
-> 
-> Компоненты: `ui-button`
->
-> Пример:
-> ```vue
-> <ui-button>Click me</ui-button>
-> ```
-
-`src/App.vue`:
-```
-<template>
-  <ui-button>Click me</ui-button>
-</template>
-
-<script>
-  export default {
-    components: {
-      'ui-button': require('./button/Button.vue').default
-    }
-  };
-</script>
-```
-
-`src/button/Button.vue`:
-```
-<template>
-  <button><slot></slot></button>
-</template>
 ```
