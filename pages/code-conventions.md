@@ -19,9 +19,6 @@
 должно быть обоснование, иначе задача не считается выполенной. Это касается и js, и
 стилей. См. https://ru.vuejs.org/v2/guide/mixins.html
 
-Функции общего назначения должны быть вынесены в отдельные js файлы с соответствующим
-названием.
-
 Исключением является вызов $emit, если событие не требует дополнительных параметров:
 
 ```js
@@ -33,7 +30,7 @@ export default {
     handleOtherEvent() {
       this.emitBlur();
     },
-    // это
+    // можно не делать этот метод
     emitBlur() {
       this.$emit('blur');
     }
@@ -45,13 +42,36 @@ export default {
 ## Code Style
 
 Для проверки базовых требований к стилю кода используется eslint (для настройки 
-см. раздел [Getting Started](pages/getting-started.md)).
+см. раздел [Getting Started](getting-started.md)).
 
 #### Vue
 
+1. **Стили обязательно должны быть помечены scoped!**
+
+2. Обязательно использование препроцессора **less**, это облегчает чтение и изменение стилей.
+
+3. Компоненты должны быть разделены и независимы, запрещено неявное изменение отображения и логики дочерних компонентов
+родительским, для этого есть свойства и методы.
+
+
+Правильный порядок тегов в компоненте:
+
+```vue
+<template>
+  <div>Component</div>
+</template>
+
+<script>
+  export default {};
+</script>
+
+<style lang="less" scoped>
+
+</style>
+```
+
 Пустые теги рекомендуется убирать. Если в компоненте отсутствует шаблон или стили, лучше
-их удалить из файла.
-Порядок полей в объекте должен быть следующим:
+их удалить из файла. Порядок полей в объекте должен быть следующим:
 
 * mixins
 * components
@@ -74,29 +94,15 @@ export default {
 Нельзя оставлять пустые строки между контентом и тегами, при этом должны быть разделены 
 script, template и style
 
-Правильно:
-
-```html
-<script>
-  import 'module';
-  
-  export default {
-    data() {
-      return {
-        message: 'test'
-      };
-    }
-  };
-</script>
-
-<template>
-  <div>{{ message }}</div>
-</template>
-```
-
 Неправильно:
 
 ```html
+<template>
+
+  <div>{{ message }}</div>
+</template>
+
+
 <script>
 
   import 'module';
@@ -110,10 +116,26 @@ script, template и style
   };
   
 </script>
-<template>
+```
 
+Правильно:
+
+```html
+<template>
   <div>{{ message }}</div>
 </template>
+
+<script>
+  import 'module';
+  
+  export default {
+    data() {
+      return {
+        message: 'test'
+      };
+    }
+  };
+</script>
 ```
 
 #### Less
