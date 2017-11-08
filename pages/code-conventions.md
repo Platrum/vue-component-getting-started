@@ -6,7 +6,8 @@
 
 ## Общие принципы
 
-Перед началом работы рекомендуется прочитать [clean code javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+Перед началом работы необходимо прочитать [clean code javascript](https://github.com/ryanmcdermott/clean-code-javascript).
+Следование этим правилам обязательно и будет проверяться при приемке задачи.
 
 **Именование файлов**
 
