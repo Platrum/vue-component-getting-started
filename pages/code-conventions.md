@@ -41,18 +41,51 @@ export default {
 
 ## Code Style
 
-Для проверки базовых требований к стилю кода используется eslint (для настройки 
-см. раздел [Getting Started](getting-started.md)).
+Для проверки базовых требований к стилю кода используется eslint. Сборка должна проходить без ошибок.
 
-#### Vue
+## Компоненты Vue
 
-1. **Стили обязательно должны быть помечены scoped!**
-
-2. Обязательно использование препроцессора **less**, это облегчает чтение и изменение стилей.
-
-3. Компоненты должны быть разделены и независимы, запрещено неявное изменение отображения и логики дочерних компонентов
+Компоненты должны быть разделены и независимы, запрещено неявное изменение отображения и логики дочерних компонентов
 родительским, для этого есть свойства и методы.
 
+События должны именоваться в стиле kebab-case **без** префикса `on`, а методы, котрые их обрабатывают, 
+должны иметь префикс `handle`:
+
+Неправильно:
+
+```vue
+<template>
+  <some-component @childEvent="onChildEvent" />
+</template>
+
+<script>
+export default {
+  methods: {
+    onChildEvent() {
+      this.$emit('onParentEvent');
+    }
+  }
+};
+</script>
+```
+
+Правильно:
+
+```vue
+<template>
+  <some-component @new-event="handleNewEvent" />
+</template>
+
+<script>
+export default {
+  methods: {
+    handleNewEvent() {
+      this.$emit('parent-event');
+    }
+  }
+};
+</script>
+```
 
 Правильный порядок тегов в компоненте:
 
@@ -62,7 +95,7 @@ export default {
 </template>
 
 <script>
-  export default {};
+export default {};
 </script>
 
 <style lang="less" scoped>
@@ -71,28 +104,10 @@ export default {
 ```
 
 Пустые теги рекомендуется убирать. Если в компоненте отсутствует шаблон или стили, лучше
-их удалить из файла. Порядок полей в объекте должен быть следующим:
-
-* mixins
-* components
-* props
-* beforeCreate
-* created
-* beforeMount
-* mounted
-* beforeUpdate
-* updated
-* activated
-* deactivated
-* beforeDestroy
-* destroyed
-* data
-* computed
-* watch
-* methods
+их удалить из файла.
 
 Нельзя оставлять пустые строки между контентом и тегами, при этом должны быть разделены 
-script, template и style
+script, template и style.
 
 Неправильно:
 
@@ -126,21 +141,25 @@ script, template и style
 </template>
 
 <script>
-  import 'module';
-  
-  export default {
-    data() {
-      return {
-        message: 'test'
-      };
-    }
-  };
+import 'module';
+
+export default {
+  data() {
+    return {
+      message: 'test'
+    };
+  }
+};
 </script>
 ```
 
-#### Less
+## Стили
 
-1. Пример правильного оформления стиля UI элемента:
+1. **Стили обязательно должны быть помечены scoped!**
+
+0. Обязательно использование препроцессора **less**, это облегчает чтение и изменение стилей.
+
+0. Пример правильного оформления стиля UI элемента:
 
     ```less
     @color1: white; /* переменные без отступа сверху, всегда выше стилей */
@@ -161,3 +180,5 @@ script, template и style
     
 0. Запрещено дублировать стили. Если одинаковый стиль используется в нескольких 
 компонентах, надо вынести его в отдельный файл в виде миксина или переменной.
+
+0. Стили должны быть названы в `kebab-case`
