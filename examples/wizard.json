@@ -1,0 +1,339 @@
+<template>
+  <ui-wizard ref="wizard" v-model="currentStep" :space="40">
+    <ui-wizard-step 
+      title="Загрузка данных из Excel" 
+      complete-title="Загрузка файла"
+      complete-action="Загрузить другой файл"
+      complete-top-content="Загружен файл: gigaccdsvmood.csv (387 Kb)"
+    >
+      <div slot="active-content">
+        <div>
+          Если у вас уже есть база клиентов в Excel-файле, то просто загрузите их в amoCRM и начните работу с ними. Импорт поддерживает следующие форматы файлов .xls, .xlsx, .ods и .csv. Импорт позволяет импортировать разом компании, контакты, сделки, покупателей, все дополнительные поля и примечания. Структура файла может быть любой.
+        </div>
+        <ui-link :font-size="12">
+          Скачать пример файла
+        </ui-link>
+        <ui-button 
+          size="small" 
+          type="success" 
+          @click="goToNextStep"
+        >
+          Загрузить файл
+        </ui-button>
+      </div>
+    </ui-wizard-step>
+
+    <ui-wizard-step 
+      title="Настройка импорта" 
+      complete-action="Настроить импорт"
+    >
+      <div slot="content">
+        <ui-button 
+          size="small" 
+          type="success" 
+          @click="goToNextStep"
+        >
+          Завершить настройку импорта
+        </ui-button>
+      </div>
+      <div slot="complete-top-content">
+        Настройки: Без первой строки. Импортируемые колонки: Название, Ответственный, Телефон, Эл. почта, Компания, Статус, Сумма, Название Компания
+      </div>
+    </ui-wizard-step>
+
+    <ui-wizard-step 
+      title="Импорт" 
+      active-title="Из Excel импортировано 26% данных" 
+    >
+      <div slot="active-content">
+        <div>
+          <el-progress :text-inside="true" :stroke-width="18" :percentage="26"></el-progress>
+        </div>
+        <ui-button 
+          size="small" 
+          type="success" 
+          text=""
+          @click="goToNextStep"
+        >
+          Перейти к результатам
+        </ui-button>
+      </div>
+    </ui-wizard-step>
+
+    <ui-wizard-step title="Результат">
+      <div slot="title"></div>
+
+      <div slot="incomplete-top-content"></div>
+
+      <div slot="active-title">
+        <div class="error-title">
+          Импорт завершен с ошибками
+        </div>
+      </div>
+      <div slot="active-content">
+        <div>
+          Мы смогли импортировать 3 сделки, 2 контакта и 2 компании. Остальное осталось за гранью нашего понимания =)
+        </div>
+        <ui-button 
+          size="small" 
+          type="success" 
+        >
+          Перейти в сделки
+        </ui-button>
+        <ui-button 
+          size="small" 
+          type="default-light" 
+          @click="resetWizard"
+        >
+          Повторить
+        </ui-button>
+        <ui-button 
+          size="small" 
+          type="success" 
+          @click="currentStep = 1"
+        >
+          Перейти на второй шаг
+        </ui-button>
+      </div>
+    </ui-wizard-step>
+  </ui-wizard>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      currentStep: 0
+    };
+  },
+  methods: {
+    goToNextStep() {
+      const wizard = this.$refs.wizard;
+
+      if (wizard) {
+        wizard.goToNextStep();
+      }
+    },
+    goToPreviousStep() {
+      const wizard = this.$refs.wizard;
+
+      if (wizard) {
+        wizard.goToPreviousStep();
+      }
+    },
+    resetWizard() {
+      const wizard = this.$refs.wizard;
+
+      if (wizard) {
+        wizard.reset();
+      }
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+  .error-title {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: left;
+    color: #e36545
+  }
+</style>
+
+{
+  "components": {
+    "ui-wizard": {
+      "group": "popup",
+      "name": "Wizard",
+      "props": {
+        "value": {
+          "type": "Number",
+          "default": 0,
+          "description": "Отвечает за номер текущего шага"
+        },
+        "title": {
+          "type": "String",
+          "default": 0,
+          "description": "Название всего визарда"
+        },
+        "space": {
+          "type": "Number",
+          "default": 0,
+          "description": "Отступы между шагами в пикселях"
+        }
+      },
+      "methods": {
+        "reset": {
+          "description": "Возвращает визард к исходному состоянию"
+        },
+        "goToNextStep": {
+          "description": "Переход визарда к следующему шагу"
+        },
+        "goToPreviousStep": {
+          "description": "Переход визарда к предыдущему шагу"
+        },
+        "setStep": {
+          "description": "Переход визарда к указанному шагу, установка корректных статусов у всех шагов",
+          "args": [
+            "Номер выбранного шага(Number)"
+          ]
+        }
+      },
+      "events": {
+        "change": {
+          "description": "Вызывается при смене шага",
+          "args": [
+            "Номер выбранного шага(Number)"
+          ]
+        }
+      },
+      "slots": {
+        "default": {
+          "description": "Шаги визарда"
+        }
+      }
+    },
+    "ui-wizard-step": {
+      "group": "popup",
+      "name": "Step",
+      "props": {
+        "space": {
+          "type": "Number",
+          "default": 0,
+          "description": "Отступы между шагами в пикселях"
+        },
+        "title": {
+          "type": "String",
+          "default": "",
+          "description": "Заголовок шага, который выводится справа от его номера, если не указан особый для текущего состояния"
+        },
+        "action": {
+          "type": "String",
+          "default": "",
+          "description": "Текст в кнопке возврата на текущий шаг, если не указан особый для текущего состояния"
+        },
+        "top-content": {
+          "type": "String",
+          "default": "",
+          "description": "Контент справа от кнопки (action), если не указан особый для текущего состояния"
+        },
+        "content": {
+          "type": "String",
+          "default": "",
+          "description": "Основной контент шага, если не указан особый для текущего состояния"
+        },
+        "incomplete-action": {
+          "type": "String",
+          "default": "",
+          "description": "Содержимое слота action в незавершенном состоянии"
+        },
+        "incomplete-top-content": {
+          "type": "String",
+          "default": "",
+          "description": "Содержимое контента справа от кнопки (action) в незавершенном состоянии"
+        },
+        "incomplete-content": {
+          "type": "String",
+          "default": "",
+          "description": "Содержимое основного контента шага в незавершенном состоянии"
+        },
+        "active-title": {
+          "type": "String",
+          "default": "",
+          "description": "Название шага в активном состоянии"
+        },
+        "active-action": {
+          "type": "String",
+          "default": "",
+          "description": "Текст в кнопке в активном состоянии"
+        },
+        "active-top-content": {
+          "type": "String",
+          "default": "",
+          "description": "Содержимое контента справа от кнопки (action) в активном состоянии"
+        },
+        "active-content": {
+          "type": "String",
+          "default": "",
+          "description": "Основной контент шага в активном состоянии"
+        },
+        "complete-title": {
+          "type": "String",
+          "default": "",
+          "description": "Название шага в завершенном состоянии"
+        },
+        "complete-action": {
+          "type": "String",
+          "default": "",
+          "description": "Содержимое слота action в завершенном состоянии"
+        },
+        "complete-top-content": {
+          "type": "String",
+          "default": "",
+          "description": "Контент справа от кнопки (action) в завершенном состоянии"
+        },
+        "complete-content": {
+          "type": "String",
+          "default": "",
+          "description": "Основной контент шага в завершенном состоянии"
+        }
+      },
+      "methods": {
+        "setStatus": {
+          "description": "Изменение статуса текущего шага",
+          "args": [
+            "Статус шага(String, ['incomplete', 'active', 'complete'])"
+          ]
+        }
+      },
+      "slots": {
+        "title": {
+          "description": "Заголовок шага, который выводится справа от его номера, если не указан особый для текущего состояния"
+        },
+        "action": {
+          "description": "Текст в кнопке возврата на текущий шаг, если не указан особый для текущего состояния"
+        },
+        "top-content": {
+          "description": "Контент справа от кнопки (action), если не указан особый для текущего состояния"
+        },
+        "content": {
+          "description": "Основной контент шага, если не указан особый для текущего состояния"
+        },
+        "incomplete-action": {
+          "description": "Содержимое слота action в незавершенном состоянии"
+        },
+        "incomplete-top-content": {
+          "description": "Содержимое контента справа от кнопки (action) в незавершенном состоянии"
+        },
+        "incomplete-content": {
+          "description": "Содержимое основного контента шага в незавершенном состоянии"
+        },
+        "active-title": {
+          "description": "Название шага в активном состоянии"
+        },
+        "active-action": {
+          "description": "Текст в кнопке в активном состоянии"
+        },
+        "active-top-content": {
+          "description": "Содержимое контента справа от кнопки (action) в активном состоянии"
+        },
+        "active-content": {
+          "description": "Основной контент шага в активном состоянии"
+        },
+        "complete-title": {
+          "description": "Название шага в завершенном состоянии"
+        },
+        "complete-action": {
+          "description": "Содержимое слота action в завершенном состоянии"
+        },
+        "complete-top-content": {
+          "description": "Контент справа от кнопки (action) в завершенном состоянии"
+        },
+        "complete-content": {
+          "description": "Основной контент шага в завершенном состоянии"
+        }
+      }
+    }
+  }
+}
